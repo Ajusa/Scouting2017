@@ -3,25 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Scouting 2017</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="vue-impression.css">
     <script src="vue.js"></script>
     <script src="vue-impression.js"></script>
+    <script src="store2.min.js"></script>
+    <script src="vue-resource.min.js"></script>
     <style>
-    body {
-        font-size: 125%;
-    }
-    
     .input-text-input {
         font-size: 100%;
     }
     </style>
 </head>
 
-<body>
+<body style="font-size: 120%">
     <div id="app">
         <navbar>
             <h4 slot="body">Scouting 2017</h4>
@@ -35,7 +33,7 @@
             </cell>
             <cell>
                 <div class="input-text">
-                    <input type="number" v-model="d.match" class="input-text-input" placeholder="Match Number">
+                    <input type="number" v-model="d.match" class="input-text-input" placeholder="Match Number" style="font-size: 100%;">
                 </div>
             </cell>
             <cell>
@@ -84,7 +82,7 @@
                 </inline-selector>
             </cell>
             <cell>
-                <inline-selector v-model="d.autongears" multiple>
+                <inline-selector v-model="d.autonballs" multiple>
                     Balls: &nbsp;
                     <inline-selector-option value="starts">Starts</inline-selector-option>
                     <inline-selector-option value="high">Shoots High</inline-selector-option>
@@ -92,12 +90,15 @@
                 </inline-selector>
             </cell>
         </group>
+        <group-title>Teleop</group-title>
         <group>
-            <group-title>Teleop</group-title>
         </group>
         <cell>
             <btn block size="lg" @click="submit">Submit</btn>
         </cell>
+        <!--<code>
+            {{JSON.stringify(data)}}
+        </code>-->
     </div>
 </body>
 <script>
@@ -112,21 +113,29 @@ var app = new Vue({
             color: "blue",
             airship: 1,
             autonmovement: ["moves"],
-            autongears: [],
+            autongears: "",
+            autonballs: "",
         },
         default: {},
+        data: [],
     },
     created: function() {
-        // `this` points to the vm instance
         this.default = JSON.parse(JSON.stringify(this.d));
+        this.data = store("data") || [];
     },
     methods: {
         submit: function() {
+            this.data.push(this.d)
+            store("data", this.data);
             this.d = JSON.parse(JSON.stringify(this.default));
-            this.$alert({
-                message: 'Form Submitted',
-                title: "You did it!",
-                okText: "Okay",
+            this.$http.post('', this.data).then(function() {
+                store.remove("data") //removes everything
+                this.data = [];
+                this.$alert({//we did it reddit
+                    message: 'Form Submitted',
+                    title: ":D",
+                    okText: "Okay",
+                });
             });
         }
     }
