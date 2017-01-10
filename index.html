@@ -24,7 +24,7 @@
         <navbar>
             <h4 slot="body">Scouting 2017</h4>
         </navbar>
-        <group-title>Info</group-title>
+        <div class="group-title" @click="info=true">Info</div>
         <group>
             <cell>
                 <div class="input-text">
@@ -96,6 +96,16 @@
         <cell>
             <btn block size="lg" @click="submit">Submit</btn>
         </cell>
+        <slideup v-model="info">
+            <slideup-header>
+                Info Documentation
+            </slideup-header>
+            <slideup-body>
+            <b>Drive Train:</b> The type of drive system they have. We have mechanum. Tank cannot move sideways. Omni can move in any directon.
+            <br>
+            <b>Airship:</b> The number of people in the Airship, which is the only place on the field with humans in it. Must be between 1 and 2
+            </slideup-body>
+        </slideup>
         <!--<code>
             {{JSON.stringify(data)}}
         </code>-->
@@ -118,6 +128,7 @@ var app = new Vue({
         },
         default: {},
         data: [],
+        info: null,
     },
     created: function() {
         this.default = JSON.parse(JSON.stringify(this.d));
@@ -131,7 +142,7 @@ var app = new Vue({
             this.$http.post('', this.data).then(function() {
                 store.remove("data") //removes everything
                 this.data = [];
-                this.$alert({//we did it reddit
+                this.$alert({ //we did it reddit
                     message: 'Form Submitted',
                     title: ":D",
                     okText: "Okay",
