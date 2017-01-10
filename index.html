@@ -6,7 +6,7 @@
     <title>Document</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <link rel="stylesheet" href="vue-impression.css">
-    <script src="vue.min.js"></script>
+    <script src="vue.js"></script>
     <script src="vue-impression.js"></script>
     <style>
     body {
@@ -28,18 +28,18 @@
         <group>
             <cell>
                 <div class="input-text">
-                    <input type="number" v-model="size" class="input-text-input" placeholder="Team Number">
+                    <input type="number" v-model="d.team" class="input-text-input" placeholder="Team Number">
                 </div>
             </cell>
             <cell>
-                <inline-selector v-model="size">
+                <inline-selector v-model="d.color">
                     Team Color: &nbsp;
                     <inline-selector-option value="red">Blue</inline-selector-option>
                     <inline-selector-option value="blue">Red</inline-selector-option>
                 </inline-selector>
             </cell>
             <cell>
-                <inline-selector v-model="drive">
+                <inline-selector v-model="d.drive">
                     Drive Train: &nbsp;
                     <inline-selector-option value="mechanum">Mech</inline-selector-option>
                     <inline-selector-option value="tank">Tank</inline-selector-option>
@@ -48,27 +48,73 @@
                 </inline-selector>
             </cell>
             <cell>
-                <inline-selector v-model="drive">
-                    Number of Wheel: &nbsp;
+                <inline-selector v-model="d.wheels">
+                    Number of Wheels: &nbsp;
                     <inline-selector-option value="4">4</inline-selector-option>
                     <inline-selector-option value="6">6</inline-selector-option>
                     <inline-selector-option value="8">8</inline-selector-option>
                 </inline-selector>
             </cell>
+        </group>
+        <group-title>Auton</group-title>
+        <group>
+            <cell>
+                <inline-selector v-model="d.autonmovement" multiple>
+                    Movement: &nbsp;
+                    <inline-selector-option value="moves">Moves</inline-selector-option>
+                    <inline-selector-option value="cross">Crosses</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.autongears" multiple>
+                    Gears: &nbsp;
+                    <inline-selector-option value="starts">Starts</inline-selector-option>
+                    <inline-selector-option value="places">Places</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.autongears" multiple>
+                    Balls: &nbsp;
+                    <inline-selector-option value="starts">Starts</inline-selector-option>
+                    <inline-selector-option value="high">Shoots High</inline-selector-option>
+                    <inline-selector-option value="low">Shoots Low</inline-selector-option>
+                </inline-selector>
+            </cell>
+        </group>
+        <cell>
+            <btn block size="lg" @click="submit">Submit</btn>
+        </cell>
     </div>
 </body>
 <script>
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!',
-        size: null,
-        drive: null,
+        d: {
+            message: 'Hello Vue!',
+            team: null,
+            drive: "tank",
+            wheels: "4",
+            color: "blue",
+            autonmovement: ["moves"],
+            autongears: [],
+
+
+        },
+        default: {},
+
+    },
+    created: function() {
+        // `this` points to the vm instance
+        this.default = JSON.parse(JSON.stringify(this.d));
     },
     methods: {
-        showHandle: function() {
+        submit: function() {
+            this.d = JSON.parse(JSON.stringify(this.default));
             this.$alert({
-                message: '这是Vue 2.0组件库！',
+                message: 'Form Submitted',
+                title: "You did it!",
+                okText: "Okay",
             });
         }
     }
