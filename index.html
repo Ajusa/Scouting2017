@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="vue-impression.css">
+    <script src="vue.min.js"></script>
+    <script src="vue-impression.js"></script>
+    <style>
+    body {
+        font-size: 125%;
+    }
+    
+    .input-text-input {
+        font-size: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <navbar>
+            <h4 slot="body">Scouting 2017</h4>
+        </navbar>
+        <group-title>Info</group-title>
+        <group>
+            <cell>
+                <div class="input-text">
+                    <input type="number" v-model="size" class="input-text-input" placeholder="Team Number">
+                </div>
+            </cell>
+            <cell>
+                <inline-selector v-model="size">
+                    Team Color: &nbsp;
+                    <inline-selector-option value="red">Blue</inline-selector-option>
+                    <inline-selector-option value="blue">Red</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="drive">
+                    Drive Train: &nbsp;
+                    <inline-selector-option value="mechanum">Mech</inline-selector-option>
+                    <inline-selector-option value="tank">Tank</inline-selector-option>
+                    <inline-selector-option value="omni">Omni</inline-selector-option>
+                    <inline-selector-option value="other">Other</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="drive">
+                    Number of Wheel: &nbsp;
+                    <inline-selector-option value="4">4</inline-selector-option>
+                    <inline-selector-option value="6">6</inline-selector-option>
+                    <inline-selector-option value="8">8</inline-selector-option>
+                </inline-selector>
+            </cell>
+    </div>
+</body>
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        message: 'Hello Vue!',
+        size: null,
+        drive: null,
+    },
+    methods: {
+        showHandle: function() {
+            this.$alert({
+                message: '这是Vue 2.0组件库！',
+            });
+        }
+    }
+})
+</script>
+
+</html>
