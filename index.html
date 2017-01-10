@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="vue-impression.css">
     <script src="vue.js"></script>
     <script src="vue-impression.js"></script>
@@ -32,6 +34,11 @@
                 </div>
             </cell>
             <cell>
+                <div class="input-text">
+                    <input type="number" v-model="d.match" class="input-text-input" placeholder="Match Number">
+                </div>
+            </cell>
+            <cell>
                 <inline-selector v-model="d.color">
                     Team Color: &nbsp;
                     <inline-selector-option value="red">Blue</inline-selector-option>
@@ -54,6 +61,10 @@
                     <inline-selector-option value="6">6</inline-selector-option>
                     <inline-selector-option value="8">8</inline-selector-option>
                 </inline-selector>
+            </cell>
+            <cell>
+                People in Airship
+                <input-number :max="2" :min="1" slot="footer" v-model="d.airship"></input-number>
             </cell>
         </group>
         <group-title>Auton</group-title>
@@ -81,6 +92,9 @@
                 </inline-selector>
             </cell>
         </group>
+        <group>
+            <group-title>Teleop</group-title>
+        </group>
         <cell>
             <btn block size="lg" @click="submit">Submit</btn>
         </cell>
@@ -91,18 +105,16 @@ var app = new Vue({
     el: '#app',
     data: {
         d: {
-            message: 'Hello Vue!',
+            match: null,
             team: null,
             drive: "tank",
             wheels: "4",
             color: "blue",
+            airship: 1,
             autonmovement: ["moves"],
             autongears: [],
-
-
         },
         default: {},
-
     },
     created: function() {
         // `this` points to the vm instance
