@@ -104,8 +104,8 @@
             </inline-selector>
         </cell>
         <cell>
-            Gears Placed
-            <input-number :min="0" v-model="d.telopgearsplaced" slot="footer"></input-number>
+            Gears Placed &nbsp;
+            <input-number :min="0" v-model="d.telopgearsplaced"></input-number>
         </cell>
         <cell>
             <inline-selector v-model="d.telopballcollec" multiple>
@@ -116,20 +116,41 @@
         </cell>
         <cell>
             <inline-selector v-model="d.telopballscore" multiple>
-                Ball Scoring: &nbsp;
+                Ball Goal: &nbsp;
                 <inline-selector-option value="low">Low</inline-selector-option>
                 <inline-selector-option value="high">High</inline-selector-option>
             </inline-selector>
         </cell>
-        <group-title>Human Player</group-title>
+        <cell>
+            <inline-selector v-model="d.telopballrating">
+                Ball Scoring: &nbsp;
+                <inline-selector-option value="low">Trash</inline-selector-option>
+                <inline-selector-option value="mid">1504</inline-selector-option>
+                <inline-selector-option value="high">God</inline-selector-option>
+            </inline-selector>
+        </cell>
+        <group-title>Humans</group-title>
         <group>
             <cell>
                 <inline-selector v-model="d.human">
-                    Rating: &nbsp;
+                    Pilot: &nbsp;
                     <inline-selector-option value="low">Trash</inline-selector-option>
                     <inline-selector-option value="mid">1504</inline-selector-option>
                     <inline-selector-option value="high">God</inline-selector-option>
                 </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.driver">
+                    Driver: &nbsp;
+                    <inline-selector-option value="low">Trash</inline-selector-option>
+                    <inline-selector-option value="mid">1504</inline-selector-option>
+                    <inline-selector-option value="high">God</inline-selector-option>
+                </inline-selector>
+            </cell>
+        </group>
+        <group>
+            <cell class="no-padding">
+                <input-textarea v-model="d.comments" placeholder="Additional Comments" />
             </cell>
         </group>
         <cell>
@@ -159,6 +180,8 @@ var app = new Vue({
             telopballscore: "",
             telopballcollec: "",
             human: "mid",
+            driver: "mid",
+            comments: ""
         },
         default: {},
         data: [],
@@ -178,6 +201,12 @@ var app = new Vue({
                 this.$alert({ //we did it reddit
                     message: 'Form Submitted',
                     title: ":D",
+                    okText: "Okay",
+                });
+            }, function() {
+                this.$alert({ //we did it reddit
+                    message: 'Form was not submitted. There are ' + this.data.length + " forms not submitted",
+                    title: ":(",
                     okText: "Okay",
                 });
             });
