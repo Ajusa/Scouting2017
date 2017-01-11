@@ -13,6 +13,7 @@
     <script src="store2.min.js"></script>
     <script src="vue-resource.min.js"></script>
     <script src="fastclick.js"></script>
+    <link rel="stylesheet" href="fontawesome.css">
     <style>
     .input-text-input,
     .input-number-input {
@@ -23,7 +24,19 @@
 
 <body style="font-size: 120%">
     <div id="app">
+        <sidelip v-model="menu">
+            <group-title class="bg-primary">Menu</group-title>
+            <group>
+                <cell>
+                    <btn theme="secondary" @click="clear">CLEAR DATA</btn>
+                </cell>
+                <cell>
+                    Number of forms: {{data.length}}
+                </cell>
+            </group>
+        </sidelip>
         <navbar>
+            <icon name="navicon" size="lg" @click="menu = !menu"></icon>
             <h4 slot="body">Scouting 2017</h4>
         </navbar>
         <div class="group-title">Info</div>
@@ -185,6 +198,7 @@ var app = new Vue({
         },
         default: {},
         data: [],
+        menu: false,
     },
     created: function() {
         this.default = JSON.parse(JSON.stringify(this.d));
@@ -195,7 +209,9 @@ var app = new Vue({
             this.data.push(this.d)
             store("data", this.data);
             this.d = JSON.parse(JSON.stringify(this.default));
+            this.$loading.toggle("Attempting to send...");
             this.$http.post('', this.data).then(function() {
+                this.$loading.toggle();
                 store.remove("data") //removes everything
                 this.data = [];
                 this.$alert({ //we did it reddit
@@ -204,13 +220,18 @@ var app = new Vue({
                     okText: "Okay",
                 });
             }, function() {
+                this.$loading.toggle();
                 this.$alert({ //we did it reddit
-                    message: 'Form was not submitted. There are ' + this.data.length + " forms not submitted",
+                    message: 'Form was not submitted. There are now ' + this.data.length + " forms not submitted",
                     title: ":(",
                     okText: "Okay",
                 });
             });
-        }
+        },
+        clear: function(){
+            store(false);  
+            this.data = [];  
+        },
     }
 })
 </script>
