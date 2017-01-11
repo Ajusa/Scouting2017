@@ -26,7 +26,7 @@
         <navbar>
             <h4 slot="body">Scouting 2017</h4>
         </navbar>
-        <div class="group-title" @click="info=true">Info</div>
+        <div class="group-title">Info</div>
         <group>
             <cell>
                 <div class="input-text">
@@ -40,23 +40,22 @@
             </cell>
             <cell>
                 <inline-selector v-model="d.color">
-                    Team Color: &nbsp;
+                    Alliance: &nbsp;
                     <inline-selector-option value="red">Blue</inline-selector-option>
                     <inline-selector-option value="blue">Red</inline-selector-option>
                 </inline-selector>
             </cell>
             <cell>
                 <inline-selector v-model="d.drive">
-                    Drive Train: &nbsp;
+                    Drive: &nbsp;
                     <inline-selector-option value="mechanum">Mech</inline-selector-option>
                     <inline-selector-option value="tank">Tank</inline-selector-option>
                     <inline-selector-option value="omni">Omni</inline-selector-option>
-                    <inline-selector-option value="other">Other</inline-selector-option>
                 </inline-selector>
             </cell>
             <cell>
                 <inline-selector v-model="d.wheels">
-                    Number of Wheels: &nbsp;
+                    Wheels: &nbsp;
                     <inline-selector-option value="4">4</inline-selector-option>
                     <inline-selector-option value="6">6</inline-selector-option>
                     <inline-selector-option value="8">8</inline-selector-option>
@@ -90,8 +89,8 @@
                 <inline-selector v-model="d.autonballs" multiple>
                     Balls: &nbsp;
                     <inline-selector-option value="starts">Starts</inline-selector-option>
-                    <inline-selector-option value="low">Shoots Low</inline-selector-option>
-                    <inline-selector-option value="high">Shoots High</inline-selector-option>
+                    <inline-selector-option value="low">Low</inline-selector-option>
+                    <inline-selector-option value="high">High</inline-selector-option>
                 </inline-selector>
             </cell>
         </group>
@@ -99,8 +98,8 @@
         <cell>
             <inline-selector v-model="d.telopgears" multiple>
                 Gears: &nbsp;
-                <inline-selector-option value="loadingstation">From Human</inline-selector-option>
-                <inline-selector-option value="ground">From Ground</inline-selector-option>
+                <inline-selector-option value="loadingstation">Station</inline-selector-option>
+                <inline-selector-option value="floor">Floor</inline-selector-option>
                 <inline-selector-option value="places">Places</inline-selector-option>
             </inline-selector>
         </cell>
@@ -109,12 +108,17 @@
             <input-number :min="0" v-model="d.telopgearsplaced" slot="footer"></input-number>
         </cell>
         <cell>
-            <inline-selector v-model="d.telopballs" multiple>
-                Balls: &nbsp;
-                <inline-selector-option value="loadingstation">From Human</inline-selector-option>
-                <inline-selector-option value="ground">From Ground</inline-selector-option>
-                <inline-selector-option value="low">Shoots Low</inline-selector-option>
-                <inline-selector-option value="high">Shoots High</inline-selector-option>
+            <inline-selector v-model="d.telopballcollec" multiple>
+                Ball Collection: &nbsp;
+                <inline-selector-option value="loadingstation">Station</inline-selector-option>
+                <inline-selector-option value="floor">Floor</inline-selector-option>
+            </inline-selector>
+        </cell>
+        <cell>
+            <inline-selector v-model="d.telopballscore" multiple>
+                Ball Scoring: &nbsp;
+                <inline-selector-option value="low">Low</inline-selector-option>
+                <inline-selector-option value="high">High</inline-selector-option>
             </inline-selector>
         </cell>
         <group-title>Human Player</group-title>
@@ -152,7 +156,8 @@ var app = new Vue({
             autonballs: "",
             telopgears: "",
             telopgearsplaced: 0,
-            telopballs: "",
+            telopballscore: "",
+            telopballcollec: "",
             human: "mid",
         },
         default: {},
