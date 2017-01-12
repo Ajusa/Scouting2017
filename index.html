@@ -28,7 +28,7 @@
             <group-title class="bg-primary" :style="{height: '8rem', padding: '2rem 1rem'}">
                 <h2>Scouting</h2>
                 <h4>Made by Arham Jain</h4></group-title>
-            <group v-show="password == auth">
+            <group v-show="s.password == auth">
                 <cell>
                     <btn theme="secondary" block @click="clear">CLEAR DATA</btn>
                 </cell>
@@ -38,11 +38,19 @@
                 <cell>
                     <btn theme="default" block @click="viewData = true">VIEW DATA</btn>
                 </cell>
+                <cell>
+                    <div class="input-text">
+                        <input type="text" v-model="s.name" class="input-text-input" placeholder="name">
+                    </div>
+                </cell>
             </group>
             <cell>
                 <div class="input-text">
-                    <input type="password" v-model="password" class="input-text-input" placeholder="password pls">
+                    <input type="password" v-model="s.password" class="input-text-input" placeholder="password pls">
                 </div>
+            </cell>
+            <cell>
+                <btn block @click="saveSettings">SAVE SETTINGS</btn>
             </cell>
             </group>
         </sidelip>
@@ -220,12 +228,17 @@ var app = new Vue({
         data: [],
         menu: false,
         viewData: false,
-        password: "",
+        s: {},
+
         auth: atob("Ymx1ZWJhYmllc2FyZXVuaGVhbHRoeQ=="),
     },
     created: function() {
         this.default = JSON.parse(JSON.stringify(this.d));
         this.data = store("data") || [];
+        this.s = store("settings") || {
+            password: "",
+            name: "",
+        };
     },
     methods: {
         submit: function() {
@@ -254,6 +267,13 @@ var app = new Vue({
         clear: function() {
             store(false);
             this.data = [];
+        },
+        saveSettings: function() {
+            store("settings", this.s);
+            this.$toast({
+                position: "bottom",
+                message: "Saved",
+            });
         },
     }
 })
