@@ -24,20 +24,34 @@
 
 <body style="font-size: 120%">
     <div id="app">
-        <sidelip v-model="menu">
-            <group-title class="bg-primary">Menu</group-title>
+        <sidelip v-model="menu" class="text-center">
+            <group-title class="bg-primary" :style="{height: '8rem', padding: '2rem 1rem'}">
+                <h2>Scouting</h2>
+                <h4>Made by Arham Jain</h4></group-title>
             <group>
                 <cell>
-                    <btn theme="secondary" @click="clear">CLEAR DATA</btn>
+                    <btn theme="secondary" block @click="clear">CLEAR DATA</btn>
                 </cell>
                 <cell>
                     Number of forms: {{data.length}}
                 </cell>
+                <cell>
+                    <btn theme="default" block @click="viewData = true">VIEW DATA</btn>
+                </cell>
             </group>
         </sidelip>
+        <slideup v-model="viewData">
+            <slideup-header>
+                <b>Data Stored on Device</b>
+            </slideup-header>
+            <cell v-for="d in data">
+                Team: {{d.team}}
+                <br> Match: {{d.match}}
+            </cell>
+        </slideup>
         <navbar>
             <icon name="navicon" size="lg" @click="menu = !menu"></icon>
-            <h4 slot="body">Scouting 2017</h4>
+            <h4 slot="body">Scouting</h4>
         </navbar>
         <div class="group-title">Info</div>
         <group>
@@ -167,7 +181,7 @@
             </cell>
         </group>
         <cell>
-            <btn block size="lg" @click="submit">Submit</btn>
+            <btn block size="lg" @click="submit">SUBMIT</btn>
         </cell>
         <!--<code>
             {{JSON.stringify(data)}}
@@ -199,6 +213,7 @@ var app = new Vue({
         default: {},
         data: [],
         menu: false,
+        viewData: false,
     },
     created: function() {
         this.default = JSON.parse(JSON.stringify(this.d));
@@ -228,9 +243,9 @@ var app = new Vue({
                 });
             });
         },
-        clear: function(){
-            store(false);  
-            this.data = [];  
+        clear: function() {
+            store(false);
+            this.data = [];
         },
     }
 })
