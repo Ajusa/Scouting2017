@@ -27,7 +27,7 @@
         <sidelip v-model="menu" class="text-center">
             <group-title class="bg-primary" :style="{height: '8rem', padding: '2rem 1rem'}">
                 <h2>Scouting</h2>
-                <h4>Made by Arham Jain</h4></group-title>
+                <h4>Made by Ajusa</h4></group-title>
             <group v-show="s.password == auth">
                 <cell>
                     <btn theme="secondary" block @click="clear">CLEAR DATA</btn>
@@ -222,7 +222,7 @@ var app = new Vue({
             telopballcollec: "",
             human: "mid",
             driver: "mid",
-            comments: ""
+            comments: "",
         },
         default: {},
         data: [],
@@ -244,6 +244,7 @@ var app = new Vue({
         submit: function() {
             this.data.push(this.d)
             store("data", this.data);
+            this.data.name = this.s.name;
             this.d = JSON.parse(JSON.stringify(this.default));
             this.$loading.toggle("Attempting to send...");
             this.$http.post('', this.data).then(function() {
