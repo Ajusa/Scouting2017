@@ -2,8 +2,8 @@ app = new Vue(
   el: '#app'
   data:
     d:
-      match: null
-      team: null
+      match: ''
+      team: ''
       drive: 'tank'
       wheels: '4'
       color: 'blue'

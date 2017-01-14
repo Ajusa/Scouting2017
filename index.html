@@ -123,11 +123,11 @@
                 </inline-selector>
             </cell>
             <cell>
-                High Goal Accuracy &nbsp;
+                High Goal Accuracy (%) &nbsp;
                 <input-number :min="0" v-model="d.autonhighaccu" :step="25" :max="100"></input-number>
             </cell>
             <cell>
-                Low Goal Accuracy &nbsp;
+                Low Goal Accuracy (%) &nbsp;
                 <input-number :min="0" v-model="d.autonlowaccu" :step="25" :max="100"></input-number>
             </cell>
         </group>
@@ -150,16 +150,16 @@
                 </inline-selector>
             </cell>
             <cell>
-                Time to Place &nbsp;
+                Time to Place (s) &nbsp;
                 <input-number :min="0" v-model="d.telopgeartime" :step="5"></input-number>
             </cell>
             <cell>
                 Gears Placed &nbsp;
-                <input-number :min="0" v-model="d.telopgearsplaced"/>
+                <input-number :min="0" v-model="d.telopgearsplaced" />
             </cell>
             <cell>
                 Gears Failed &nbsp;
-                <input-number :min="0" v-model="d.telopgearsfailed"/>
+                <input-number :min="0" v-model="d.telopgearsfailed" />
             </cell>
             <cell>
                 <checkbox v-model="d.teloprobostuck">Stuck on Peg</checkbox>
@@ -178,12 +178,12 @@
                 </inline-selector>
             </cell>
             <cell>
-                High Goal Accuracy &nbsp;
-                <input-number :min="0" v-model="d.telophighaccu" :step="25" :max="100"/>
+                High Goal Accuracy (%) &nbsp;
+                <input-number :min="0" v-model="d.telophighaccu" :step="25" :max="100" />
             </cell>
             <cell>
-                Low Goal Accuracy &nbsp;
-                <input-number :min="0" v-model="d.teloplowaccu" :step="25" :max="100"/>
+                Low Goal Accuracy (%) &nbsp;
+                <input-number :min="0" v-model="d.teloplowaccu" :step="25" :max="100" />
             </cell>
         </group>
         <group-title>End Game</group-title>
@@ -196,7 +196,7 @@
                 </inline-selector>
             </cell>
             <cell>
-                Time to Hang &nbsp;
+                Time to Hang (s) &nbsp;
                 <input-number :min="0" v-model="d.telopgeartime" :step="5"></input-number>
             </cell>
         </group>
@@ -219,6 +219,7 @@
         <cell>
             <btn block size="lg" @click="submit">SUBMIT</btn>
         </cell>
+        <back-to-top />
         <!--<code>
             {{JSON.stringify(data)}}
         </code>-->
