@@ -65,7 +65,7 @@
         }), function() {
           this.$loading.toggle();
           return this.$alert({
-            message: 'Form was not submitted. There are now ' + this.data.length + ' forms not submitted',
+            message: 'Form saved. There are now ' + this.data.length + ' forms saved',
             title: ':(',
             okText: 'Okay'
           });

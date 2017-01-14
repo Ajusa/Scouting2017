@@ -155,11 +155,11 @@
             </cell>
             <cell>
                 Gears Placed &nbsp;
-                <input-number :min="0" v-model="d.telopgearsplaced"></input-number>
+                <input-number :min="0" v-model="d.telopgearsplaced"/>
             </cell>
             <cell>
                 Gears Failed &nbsp;
-                <input-number :min="0" v-model="d.telopgearsfailed"></input-number>
+                <input-number :min="0" v-model="d.telopgearsfailed"/>
             </cell>
             <cell>
                 <checkbox v-model="d.teloprobostuck">Stuck on Peg</checkbox>
@@ -179,11 +179,11 @@
             </cell>
             <cell>
                 High Goal Accuracy &nbsp;
-                <input-number :min="0" v-model="d.telophighaccu" :step="25" :max="100"></input-number>
+                <input-number :min="0" v-model="d.telophighaccu" :step="25" :max="100"/>
             </cell>
             <cell>
                 Low Goal Accuracy &nbsp;
-                <input-number :min="0" v-model="d.teloplowaccu" :step="25" :max="100"></input-number>
+                <input-number :min="0" v-model="d.teloplowaccu" :step="25" :max="100"/>
             </cell>
         </group>
         <group-title>End Game</group-title>

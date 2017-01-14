@@ -56,7 +56,7 @@ app = new Vue(
       ), ->
         @$loading.toggle()
         @$alert
-          message: 'Form was not submitted. There are now ' + @data.length + ' forms not submitted'
+          message: 'Form saved. There are now ' + @data.length + ' forms saved'
           title: ':('
           okText: 'Okay'
     clear: ->
