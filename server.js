@@ -33,6 +33,10 @@ app.post('/', function(req, res) {
 app.get('/api', function(req, res) {
     res.send("<pre>" + JSON.stringify(data, null, 4) + "</pre>");
 });
+app.get('/download', function(req, res) {
+    res.writeHead(200, { 'Content-Type': 'application/force-download', 'Content-disposition': 'attachment; filename=latest.csv' });
+    res.end(j2xls(data));
+});
 serverStopper = app.listen(portNum, function() {});
 for (var dev in ifaces) {
     var iface = ifaces[dev].filter(function(details) {
@@ -52,7 +56,7 @@ function convert(obj) { //turns object.arrays into strings
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
             if (obj[key] instanceof Array) {
-                
+
                 obj[key] = obj[key].toString()
             }
         }

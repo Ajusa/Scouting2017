@@ -8,11 +8,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="css/vue-impression.css">
-    <script src="vue.js"></script>
-    <script src="vue-impression.js"></script>
-    <script src="store2.min.js"></script>
-    <script src="vue-resource.min.js"></script>
-    <script src="fastclick.js"></script>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-impression.js"></script>
+    <script src="lib/store2.min.js"></script>
+    <script src="lib/vue-resource.min.js"></script>
+    <script src="lib/fastclick.js"></script>
     <link rel="stylesheet" href="css/fontawesome.css">
     <style>
     .input-text-input,
@@ -24,10 +24,12 @@
 
 <body style="font-size: 120%">
     <div id="app">
+        <!-- MENU START -->
         <sidelip v-model="menu" class="text-center">
             <group-title class="bg-primary" :style="{height: '8rem', padding: '2rem 1rem'}">
                 <h2>Scouting</h2>
-                <h4>Made by Ajusa</h4></group-title>
+                <h4>Made by Ajusa</h4>
+            </group-title>
             <group v-show="s.password == auth">
                 <cell>
                     <btn theme="secondary" block @click="clear">CLEAR DATA</btn>
@@ -39,20 +41,15 @@
                     <btn theme="default" block @click="viewData = true">VIEW DATA</btn>
                 </cell>
                 <cell>
-                    <div class="input-text">
-                        <input type="text" v-model="s.name" class="input-text-input" placeholder="name">
-                    </div>
+                    <input-text v-model="s.name" placeholder="Name" type="text" />
                 </cell>
             </group>
             <cell>
-                <div class="input-text">
-                    <input type="password" v-model="s.password" class="input-text-input" placeholder="password pls">
-                </div>
+                <input-text v-model="s.password" placeholder="Password" type="password" />
             </cell>
             <cell>
                 <btn block @click="saveSettings">SAVE SETTINGS</btn>
             </cell>
-            </group>
         </sidelip>
         <slideup v-model="viewData">
             <slideup-header>
@@ -64,20 +61,16 @@
             </cell>
         </slideup>
         <navbar>
-            <icon name="navicon" size="lg" @click="menu = !menu"></icon>
+            <icon name="navicon" size="lg" @click="menu = true"></icon>
             <h4 slot="body">Scouting</h4>
         </navbar>
         <div class="group-title">Info</div>
         <group>
             <cell>
-                <div class="input-text">
-                    <input type="number" v-model="d.team" class="input-text-input" placeholder="Team Number">
-                </div>
+                <input-text v-model="d.team" placeholder="Team Number" type="number" />
             </cell>
             <cell>
-                <div class="input-text">
-                    <input type="number" v-model="d.match" class="input-text-input" placeholder="Match Number" style="font-size: 100%;">
-                </div>
+                <input-text v-model="d.match" placeholder="Match Number" type="number" />
             </cell>
             <cell>
                 <inline-selector v-model="d.color">
@@ -116,7 +109,7 @@
                 <inline-selector v-model="d.autonmovement" multiple>
                     Movement: &nbsp;
                     <inline-selector-option value="moves">Moves</inline-selector-option>
-                    <inline-selector-option value="cross">Crosses Thing</inline-selector-option>
+                    <inline-selector-option value="cross">Crosses Line</inline-selector-option>
                 </inline-selector>
             </cell>
             <cell>
@@ -134,42 +127,82 @@
                     <inline-selector-option value="high">High</inline-selector-option>
                 </inline-selector>
             </cell>
+            <cell>
+                High Goal Accuracy &nbsp;
+                <input-number :min="0" v-model="d.autonhighaccu" :step="25" :max="100"></input-number>
+            </cell>
+            <cell>
+                Low Goal Accuracy &nbsp;
+                <input-number :min="0" v-model="d.autonlowaccu" :step="25" :max="100"></input-number>
+            </cell>
         </group>
         <group-title>Teleop</group-title>
-        <cell>
-            <inline-selector v-model="d.telopgears" multiple>
-                Gears: &nbsp;
-                <inline-selector-option value="loadingstation">Station</inline-selector-option>
-                <inline-selector-option value="floor">Floor</inline-selector-option>
-                <inline-selector-option value="places">Places</inline-selector-option>
-            </inline-selector>
-        </cell>
-        <cell>
-            Gears Placed &nbsp;
-            <input-number :min="0" v-model="d.telopgearsplaced"></input-number>
-        </cell>
-        <cell>
-            <inline-selector v-model="d.telopballcollec" multiple>
-                Ball Collection: &nbsp;
-                <inline-selector-option value="loadingstation">Station</inline-selector-option>
-                <inline-selector-option value="floor">Floor</inline-selector-option>
-            </inline-selector>
-        </cell>
-        <cell>
-            <inline-selector v-model="d.telopballscore" multiple>
-                Ball Goal: &nbsp;
-                <inline-selector-option value="low">Low</inline-selector-option>
-                <inline-selector-option value="high">High</inline-selector-option>
-            </inline-selector>
-        </cell>
-        <cell>
-            <inline-selector v-model="d.telopballrating">
-                Ball Scoring: &nbsp;
-                <inline-selector-option value="low">Trash</inline-selector-option>
-                <inline-selector-option value="mid">Avg</inline-selector-option>
-                <inline-selector-option value="high">God</inline-selector-option>
-            </inline-selector>
-        </cell>
+        <group>
+            <cell>
+                <checkbox v-model="d.telopdefense">Defensive</checkbox>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.telopgears" multiple>
+                    Gear Collection: &nbsp;
+                    <inline-selector-option value="loadingstation">Station</inline-selector-option>
+                    <inline-selector-option value="floor">Floor</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.telopgearwhere" multiple>
+                    Gear Placing: &nbsp;
+                    <inline-selector-option value="loadingstation">Side Peg</inline-selector-option>
+                    <inline-selector-option value="floor">Center Peg</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                Time to Place &nbsp;
+                <input-number :min="0" v-model="d.telopgeartime" :step="5"></input-number>
+            </cell>
+            <cell>
+                Gears Placed &nbsp;
+                <input-number :min="0" v-model="d.telopgearsplaced"></input-number>
+            </cell>
+            <cell>
+                Gears Failed &nbsp;
+                <input-number :min="0" v-model="d.telopgearsfailed"></input-number>
+            </cell>
+            <cell>
+                <checkbox v-model="d.teloprobostuck">Stuck on Peg</checkbox>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.telopballcollec" multiple>
+                    Ball Collection: &nbsp;
+                    <inline-selector-option value="loadingstation">Station</inline-selector-option>
+                    <inline-selector-option value="floor">Floor</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.telopballscore" multiple>
+                    Ball Goal: &nbsp;
+                    <inline-selector-option value="low">Low</inline-selector-option>
+                    <inline-selector-option value="high">High</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                High Goal Accuracy &nbsp;
+                <input-number :min="0" v-model="d.telophighaccu" :step="25" :max="100"></input-number>
+            </cell>
+            <cell>
+                Low Goal Accuracy &nbsp;
+                <input-number :min="0" v-model="d.teloplowaccu" :step="25" :max="100"></input-number>
+            </cell>
+        </group>
+        <group-title>End Game</group-title>
+        <group>
+            <cell>
+                <inline-selector v-model="d.telopballcollec" multiple>
+                    Hang: &nbsp;
+                    <inline-selector-option value="loadingstation">Attempt</inline-selector-option>
+                    <inline-selector-option value="floor">Success</inline-selector-option>
+                </inline-selector>
+            </cell>
+        </group>
         <group-title>Humans</group-title>
         <group>
             <cell>
@@ -202,82 +235,7 @@
         </code>-->
     </div>
 </body>
-<script>
-var app = new Vue({
-    el: '#app',
-    data: {
-        d: {
-            match: null,
-            team: null,
-            drive: "tank",
-            wheels: "4",
-            color: "blue",
-            airship: 1,
-            autonmovement: ["moves"],
-            autongears: "",
-            autonballs: "",
-            telopgears: "",
-            telopgearsplaced: 0,
-            telopballscore: "",
-            telopballcollec: "",
-            human: "mid",
-            driver: "mid",
-            comments: "",
-        },
-        default: {},
-        data: [],
-        menu: false,
-        viewData: false,
-        s: {},
-
-        auth: atob("Ymx1ZWJhYmllc2FyZXVuaGVhbHRoeQ=="),
-    },
-    created: function() {
-        this.default = JSON.parse(JSON.stringify(this.d));
-        this.data = store("data") || [];
-        this.s = store("settings") || {
-            password: "",
-            name: "",
-        };
-    },
-    methods: {
-        submit: function() {
-            this.data.push(this.d)
-            store("data", this.data);
-            this.data.name = this.s.name;
-            this.d = JSON.parse(JSON.stringify(this.default));
-            this.$loading.toggle("Attempting to send...");
-            this.$http.post('', this.data).then(function() {
-                this.$loading.toggle();
-                store.remove("data") //removes everything
-                this.data = [];
-                this.$alert({ //we did it reddit
-                    message: 'Form Submitted',
-                    title: ":D",
-                    okText: "Okay",
-                });
-            }, function() {
-                this.$loading.toggle();
-                this.$alert({ //we did it reddit
-                    message: 'Form was not submitted. There are now ' + this.data.length + " forms not submitted",
-                    title: ":(",
-                    okText: "Okay",
-                });
-            });
-        },
-        clear: function() {
-            store(false);
-            this.data = [];
-        },
-        saveSettings: function() {
-            store("settings", this.s);
-            this.$toast({
-                position: "bottom",
-                message: "Saved",
-            });
-        },
-    }
-})
+<script src="app.js">
 </script>
 <script>
 if ('addEventListener' in document) {
