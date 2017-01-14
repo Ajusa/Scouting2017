@@ -86,8 +86,7 @@
                     <inline-selector-option value="tank">Tank</inline-selector-option>
                     <inline-selector-option value="omni">Omni</inline-selector-option>
                 </inline-selector>
-            </cell>
-            <cell>
+                <br>
                 <inline-selector v-model="d.wheels">
                     Wheels: &nbsp;
                     <inline-selector-option value="4">4</inline-selector-option>
@@ -96,11 +95,7 @@
                 </inline-selector>
             </cell>
             <cell>
-                <inline-selector v-model="d.airship">
-                    People in Airship: &nbsp;
-                    <inline-selector-option value="1">1</inline-selector-option>
-                    <inline-selector-option value="2">2</inline-selector-option>
-                </inline-selector>
+                <checkbox v-model="d.foul">Does it Foul</checkbox>
             </cell>
         </group>
         <group-title>Auton</group-title>
@@ -147,8 +142,7 @@
                     <inline-selector-option value="loadingstation">Station</inline-selector-option>
                     <inline-selector-option value="floor">Floor</inline-selector-option>
                 </inline-selector>
-            </cell>
-            <cell>
+                <br>
                 <inline-selector v-model="d.telopgearwhere" multiple>
                     Gear Placing: &nbsp;
                     <inline-selector-option value="loadingstation">Side Peg</inline-selector-option>
@@ -176,8 +170,7 @@
                     <inline-selector-option value="loadingstation">Station</inline-selector-option>
                     <inline-selector-option value="floor">Floor</inline-selector-option>
                 </inline-selector>
-            </cell>
-            <cell>
+                <br>
                 <inline-selector v-model="d.telopballscore" multiple>
                     Ball Goal: &nbsp;
                     <inline-selector-option value="low">Low</inline-selector-option>
@@ -196,7 +189,7 @@
         <group-title>End Game</group-title>
         <group>
             <cell>
-                <inline-selector v-model="d.telopballcollec" multiple>
+                <inline-selector v-model="d.telopballcollec">
                     Hang: &nbsp;
                     <inline-selector-option value="attempt">Attempt</inline-selector-option>
                     <inline-selector-option value="success">Success</inline-selector-option>

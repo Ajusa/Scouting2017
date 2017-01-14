@@ -11,7 +11,7 @@
         drive: 'tank',
         wheels: '4',
         color: 'blue',
-        airship: 1,
+        foul: false,
         autonmovement: ['moves'],
         autongears: '',
         autonballs: '',
