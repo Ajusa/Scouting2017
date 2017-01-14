@@ -19,6 +19,12 @@
     .input-number-input {
         font-size: 100%;
     }
+    .red{
+        color: red;
+    }
+    .blue{
+        color: blue;
+    }
     </style>
 </head>
 
@@ -73,10 +79,10 @@
                 <input-text v-model="d.match" placeholder="Match Number" type="number" />
             </cell>
             <cell>
-                <inline-selector v-model="d.color">
+                <inline-selector v-model="d.color" theme="warning">
                     Alliance: &nbsp;
-                    <inline-selector-option value="red">Blue</inline-selector-option>
-                    <inline-selector-option value="blue">Red</inline-selector-option>
+                    <inline-selector-option value="red"><span class="blue">Blue</span></inline-selector-option>
+                    <inline-selector-option value="blue"><span class="red">Red</span></inline-selector-option>
                 </inline-selector>
             </cell>
             <cell>
@@ -219,7 +225,6 @@
         <cell>
             <btn block size="lg" @click="submit">SUBMIT</btn>
         </cell>
-        <back-to-top />
         <!--<code>
             {{JSON.stringify(data)}}
         </code>-->
