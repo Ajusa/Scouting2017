@@ -1,0 +1,4 @@
+Notes:
+Hanging function and where they collect balls from were broken. Fixed after match 4
+Match 5 and above are fine as per this.
+Hanging time match 16 and below were broken

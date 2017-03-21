@@ -1,0 +1,8 @@
+Should we drop timing of gears?
+It is confusing for scouts to count
+Implementing a timer is a pain
+At best, there is no good way to count gear cycle, depends on defination
+
+We only really use the number of gears delivered
+
+If we were to drop it, and a robot delivers a gear then plays defense, we won't have good data.

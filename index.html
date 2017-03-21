@@ -19,10 +19,12 @@
     .input-number-input {
         font-size: 100%;
     }
-    .red{
+    
+    .red {
         color: red;
     }
-    .blue{
+    
+    .blue {
         color: blue;
     }
     </style>
@@ -73,10 +75,10 @@
         <div class="group-title">Info</div>
         <group>
             <cell>
-                <input-text v-model="d.team" placeholder="Team Number" type="number" />
+                <input-text v-model="d.match" placeholder="Match Number" type="number" />
             </cell>
             <cell>
-                <input-text v-model="d.match" placeholder="Match Number" type="number" />
+                <input-text v-model="d.team" placeholder="Team Number" type="number" />
             </cell>
             <cell>
                 <inline-selector v-model="d.color" theme="warning">
@@ -91,6 +93,7 @@
                     <inline-selector-option value="mechanum">Mech</inline-selector-option>
                     <inline-selector-option value="tank">Tank</inline-selector-option>
                     <inline-selector-option value="omni">Omni</inline-selector-option>
+                    <inline-selector-option value="unknown">?</inline-selector-option>
                 </inline-selector>
                 <br>
                 <inline-selector v-model="d.wheels">
@@ -98,6 +101,7 @@
                     <inline-selector-option value="4">4</inline-selector-option>
                     <inline-selector-option value="6">6</inline-selector-option>
                     <inline-selector-option value="8">8</inline-selector-option>
+                    <inline-selector-option value="unknown">?</inline-selector-option>
                 </inline-selector>
             </cell>
             <cell>
@@ -107,7 +111,7 @@
         <group-title>Auton</group-title>
         <group>
             <cell>
-                <inline-selector v-model="d.autonmovement" multiple>
+                <inline-selector v-model="d.autonmovement">
                     Movement: &nbsp;
                     <inline-selector-option value="moves">Moves</inline-selector-option>
                     <inline-selector-option value="cross">Crosses Line</inline-selector-option>
@@ -156,12 +160,8 @@
                 </inline-selector>
             </cell>
             <cell>
-                Time to Place (s) &nbsp;
-                <input-number :min="0" v-model="d.telopgeartime" :step="5"></input-number>
-            </cell>
-            <cell>
                 Gears Placed &nbsp;
-                <input-number :min="0" v-model="d.telopgearsplaced" />
+                <input-number :min="0" v-model="d.telopgearsplaced" :max="20" />
             </cell>
             <cell>
                 Gears Failed &nbsp;
@@ -195,7 +195,7 @@
         <group-title>End Game</group-title>
         <group>
             <cell>
-                <inline-selector v-model="d.telopballcollec">
+                <inline-selector v-model="d.telopballhang">
                     Hang: &nbsp;
                     <inline-selector-option value="attempt">Attempt</inline-selector-option>
                     <inline-selector-option value="success">Success</inline-selector-option>
@@ -203,7 +203,7 @@
             </cell>
             <cell>
                 Time to Hang (s) &nbsp;
-                <input-number :min="0" v-model="d.telopgeartime" :step="5"></input-number>
+                <input-number :min="0" v-model="d.telophangtime" :step="5" :max="30"></input-number>
             </cell>
         </group>
         <group-title>Humans</group-title>

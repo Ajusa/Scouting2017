@@ -10,13 +10,17 @@ var address, os = require('os'),
 var portNum = 80;
 var data = [];
 var fileName = moment().format("M;D;YYYY;H;mm;ss");
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    limit: '10mb'
 }));
 app.use(cors());
 app.use('/', express.static(__dirname + '/'));
 fs.writeFile(fileName + ".xlsx", j2xls(data), 'binary', function(err) {
+    error(err);
+});
+fs.writeFile(fileName + ".json", JSON.stringify(data, null, 4), 'binary', function(err) {
     error(err);
 });
 app.post('/', function(req, res) {
@@ -28,13 +32,16 @@ app.post('/', function(req, res) {
     fs.writeFile(fileName + ".xlsx", j2xls(data), 'binary', function(err) {
         error(err);
     });
+    fs.writeFile(fileName + ".json", JSON.stringify(data, null, 4), 'binary', function(err) {
+        error(err);
+    });
     res.sendStatus(200);
 });
 app.get('/api', function(req, res) {
-    res.send("<pre>" + JSON.stringify(data, null, 4) + "</pre>");
+    res.send(JSON.stringify(data, null, 4));
 });
 app.get('/download', function(req, res) {
-    res.writeHead(200, { 'Content-Type': 'application/force-download', 'Content-disposition': 'attachment; filename=latest.csv' });
+    res.writeHead(200, { 'Content-Type': 'application/force-download', 'Content-disposition': 'attachment; filename=latest.xlsx' });
     res.end(j2xls(data));
 });
 serverStopper = app.listen(portNum, function() {});
