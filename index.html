@@ -18,15 +18,7 @@
     .input-text-input,
     .input-number-input {
         font-size: 100%;
-    }
-    
-    .red {
-        color: red;
-    }
-    
-    .blue {
-        color: blue;
-    }
+    } 
     </style>
 </head>
 
@@ -81,7 +73,7 @@
                 <input-text v-model="d.team" placeholder="Team Number" type="number" />
             </cell>
             <cell>
-                <inline-selector v-model="d.color" theme="warning">
+                <inline-selector v-model="d.color">
                     Alliance: &nbsp;
                     <inline-selector-option value="red"><span class="blue">Blue</span></inline-selector-option>
                     <inline-selector-option value="blue"><span class="red">Red</span></inline-selector-option>
@@ -127,6 +119,14 @@
             <cell>
                 <inline-selector v-model="d.autonballs" multiple>
                     Balls: &nbsp;
+                    <inline-selector-option value="starts">Starts</inline-selector-option>
+                    <inline-selector-option value="low">Low</inline-selector-option>
+                    <inline-selector-option value="high">High</inline-selector-option>
+                </inline-selector>
+            </cell>
+            <cell>
+                <inline-selector v-model="d.autonballs" multiple>
+                    Auton Balls: &nbsp;
                     <inline-selector-option value="starts">Starts</inline-selector-option>
                     <inline-selector-option value="low">Low</inline-selector-option>
                     <inline-selector-option value="high">High</inline-selector-option>

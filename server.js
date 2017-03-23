@@ -10,10 +10,10 @@ var address, os = require('os'),
 var portNum = 80;
 var data = [];
 var fileName = moment().format("M;D;YYYY;H;mm;ss");
-app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit: '10mb'
+    limit: '100mb'
 }));
 app.use(cors());
 app.use('/', express.static(__dirname + '/'));

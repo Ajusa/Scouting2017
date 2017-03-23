@@ -54,7 +54,7 @@
         this.d.name = this.s.name;
         this.d = JSON.parse(JSON.stringify(this["default"]));
         this.$loading.toggle('Attempting to send...');
-        return this.$http.post('', this.data).then((function() {
+        return this.$http.post('', this.data, {timeout: 3000}).then((function() {
           this.$loading.toggle();
           this.clear();
           return this.$alert({
