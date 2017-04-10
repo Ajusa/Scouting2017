@@ -41,8 +41,8 @@
             <button class="ui button" @click="submit">Add</button>
         </div>
         <div class="ui divider"></div>
-        <div class="ui cards">
-            <div class="card" style="width: 50%" v-for="team in data">
+        <div class="ui cards grid three column grid stackable">
+            <div class="card column" v-for="team in data">
                 <div class="content">
                     <div class="header">
                         {{team.number}}
@@ -53,14 +53,24 @@
                     <div class="description">
                         <b class="big">Summary</b>
                         <div class="ui">
-                            <div>Telop High Goal: <b>{{team.autonhighgear}}%</b></div>
-                            <div>Telop Low Goal: <b>{{team.autonlowgear}}%</b></div>
-                            <div>Auton High Goal: <b>{{team.telophighgear}}%</b></div>
-                            <div>Auton Low Goal: <b>{{team.teloplowgear}}%</b></div>
+                            <div v-if="(team.telophigh == 0) && (team.teloplow == 0)">
+                                <b>They don't shoot in teleop</b>
+                            </div>
+                            <div v-else>
+                                <div>Telop High Goal Accuracy: <b>{{team.telophigh}}%</b></div>
+                                <div>Telop Low Goal Accuracy: <b>{{team.teloplow}}%</b></div>
+                            </div>
+                            <div v-if="(team.autonhigh == 0) && (team.autonlow == 0)">
+                                <b>They don't shoot in auton</b>
+                            </div>
+                            <div v-else>
+                                <div>Auton High Goal Accuracy: <b>{{team.autonhigh}}%</b></div>
+                                <div>Auton Low Goal Accuracy: <b>{{team.autonlow}}%</b></div>
+                            </div>
                             <div>Gears Placed - Avg: <b>{{_.round(_.mean(team.gearsplaced), 3)}}</b> &nbsp; 1st Quartile: <b>{{_.round(ss.quantile(team.gearsplaced, .25), 3)}}</b> &nbsp; Median: <b>{{_.round(ss.quantile(team.gearsplaced, .5), 3)}}</b> &nbsp; 3rd Quartile: <b>{{_.round(ss.quantile(team.gearsplaced, .75), 3)}}</b> &nbsp; Min: <b>{{_.round(ss.min(team.gearsplaced, .25), 3)}}</b> &nbsp; Max: <b>{{_.round(ss.max(team.gearsplaced, .25), 3)}}</b>
                             </div>
                             <div>Avg Gears Failed: <b>{{team.gearsfailed}}</b></div>
-                            <div>Avg Gear Cycle Time: <b>{{team.cycletime}} seconds</b></div>
+                            <!--<div>Avg Gear Cycle Time: <b>{{team.cycletime}} seconds</b></div>-->
                         </div>
                     </div>
                     <br>
@@ -77,6 +87,13 @@
                     <div class="description">
                         <b class="big">Auton</b>
                         <div class="ui">
+                            <div v-if="(team.autonhigh == 0) && (team.autonlow == 0)">
+                                <b>They don't shoot in auton</b>
+                            </div>
+                            <div v-else>
+                                <div>High Goal Accuracy: <b>{{team.autonhigh}}%</b></div>
+                                <div>Low Goal Accuracy: <b>{{team.autonlow}}%</b></div>
+                            </div>
                             <div>Moved:
                                 <matches :d="team.moved"></matches>
                             </div>
@@ -89,34 +106,38 @@
                             <div>Placed Gears:
                                 <matches :d="team.placegears"></matches>
                             </div>
-                            <div>High Goal Accuracy: <b>{{team.autonhighgear}}%</b></div>
-                            <div>Low Goal Accuracy: <b>{{team.autonlowgear}}%</b></div>
                         </div>
                     </div>
                     <br>
                     <div class="description">
                         <b class="big">Telop</b>
+                        <div v-if="(team.telophigh == 0) && (team.teloplow == 0)">
+                            <b>They don't shoot in telop</b>
+                        </div>
+                        <div v-else>
+                            <div>High Goal Accuracy: <b>{{team.telophigh}}%</b></div>
+                            <div>Low Goal Accuracy: <b>{{team.teloplow}}%</b></div>
+                        </div>
                         <div>Defensive:
                             <matches :d="team.defensive"></matches>
                         </div>
-                        <div>High Goal Accuracy: <b>{{team.telophighgear}}%</b></div>
-                        <div>Low Goal Accuracy: <b>{{team.teloplowgear}}%</b></div>
                         <!--<div>Gear Collection: <b>Ground: 45 (4 avg) | Station: 67 (5 avg)</b></div>-->
-                        <div>Avg Gear Cycle Time: <b>{{team.cycletime}} seconds</b></div>
+                        <!--<div>Avg Gear Cycle Time: <b>{{team.cycletime}} seconds</b></div>-->
                         <div>Avg Gears Placed: <b>{{_.round(_.mean(team.gearsplaced), 3)}}</b></div>
                         <div>Avg Gears Failed: <b>{{team.gearsfailed}}</b></div>
                         <div>Gear Stuck on Peg:
                             <matches :d="team.stuck"></matches>
                         </div>
-                        <div>Station : Ground Pickup: <b>3:1</b></div>
-                        <div>Hanging: <matches :d="team.hanging"></matches></div>
+                        <div>Hanging:
+                            <matches :d="team.hanging"></matches>
+                        </div>
                         <div>Avg Time to Hang: <b>{{team.hangtime}} seconds</b></div>
                         <!--<div>Driver Quality: <b>73%</b></div>-->
                     </div>
                     <br>
                     <div class="description">
                         <b class="big">Additional Comments</b>
-                        <div v-for="(comment, i) in team.comments.text">{{team.comments.match[i]}}: {{comment}}</div>
+                        <div v-for="(comment, i) in team.comments.text" v-if="comment">Match {{team.comments.match[i]}}: {{comment}} - {{team.comments.names[i]}}</div>
                     </div>
                 </div>
                 <div class="extra content">
@@ -128,7 +149,6 @@
             </div>
         </div>
     </div>
-   
     <template id="match">
         <span>
             [<span v-for="m in _.sortBy(d, ['match'])">

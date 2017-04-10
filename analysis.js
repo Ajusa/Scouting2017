@@ -50,8 +50,8 @@ var app = new Vue({
                 if (!_.includes(item.autongears, "places")) return { c: "r", match: item.match }
                 else return { c: "g", match: item.match }
             });
-            stuff.autonhighgear = _.round(_.meanBy(matches, "autonhighaccu"), 3)
-            stuff.autonlowgear = _.round(_.meanBy(matches, "autonlowaccu"), 3)
+            stuff.autonhigh = _.round(_.meanBy(matches, "autonhighaccu"), 3)
+            stuff.autonlow = _.round(_.meanBy(matches, "autonlowaccu"), 3)
             stuff.defensive = _.map(matches, function(item) {
                 if (!item.telopdefense) return { c: "r", match: item.match }
                 else return { c: "g", match: item.match }
@@ -60,8 +60,8 @@ var app = new Vue({
                 if (!item.teloprobostuck) return { c: "r", match: item.match }
                 else return { c: "g", match: item.match }
             });
-            stuff.telophighgear = _.round(_.meanBy(matches, "telophighaccu"), 3)
-            stuff.teloplowgear = _.round(_.meanBy(matches, "teloplowaccu"), 3)
+            stuff.telophigh = _.round(_.meanBy(matches, "telophighaccu"), 3)
+            stuff.teloplow = _.round(_.meanBy(matches, "teloplowaccu"), 3)
             stuff.cycletime = _.round(_.mean(_.compact(_.map(matches, "telopgearstime"))), 3)
             stuff.gearsplaced = _.map(matches, "telopgearsplaced")
             stuff.gearsfailed = _.round(_.meanBy(matches, "telopgearsfailed"), 3)
@@ -73,6 +73,7 @@ var app = new Vue({
             stuff.comments = {}
             stuff.comments.text = _.map(matches, "comments")
             stuff.comments.match = _.map(matches, "match")
+            stuff.comments.names = _.map(matches, "name")
             stuff.hanging = _.map(matches, function(item) {
                 if (item.telopballhang == 'success') return { c: "g", match: item.match }
                 else return { c: "r", match: item.match }

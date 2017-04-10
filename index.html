@@ -124,14 +124,7 @@
                     <inline-selector-option value="high">High</inline-selector-option>
                 </inline-selector>
             </cell>
-            <cell>
-                <inline-selector v-model="d.autonballs" multiple>
-                    Auton Balls: &nbsp;
-                    <inline-selector-option value="starts">Starts</inline-selector-option>
-                    <inline-selector-option value="low">Low</inline-selector-option>
-                    <inline-selector-option value="high">High</inline-selector-option>
-                </inline-selector>
-            </cell>
+
             <cell>
                 High Goal Accuracy (%) &nbsp;
                 <input-number :min="0" v-model="d.autonhighaccu" :step="25" :max="100"></input-number>
